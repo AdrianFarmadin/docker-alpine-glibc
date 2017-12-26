@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM docker:latest
 
 ENV LANG=C.UTF-8
 
@@ -34,3 +34,9 @@ RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases
         "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME"
+
+# Install docker-compose
+RUN DOCKER_COMPOSE_VERSION="1.18.0" && \
+    apk add --no-cache curl && \
+    curl -L https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && \
+    chmod +x /usr/local/bin/docker-compose
